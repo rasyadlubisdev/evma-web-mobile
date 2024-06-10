@@ -16,14 +16,16 @@ const Rewards = () => {
       </div>
       <Title title="Exchange" />
       <Slider>
-        <div style={{ width: "144px", marginRight: "200px" }}>
-          <Gopay />
-        </div>
-        <div style={{ width: "144px", marginRight: "20px" }}>
-          <Ovo />
-        </div>
-        <div style={{ width: "144px", marginRight: "20px" }}>
-          <Shopeepay />
+        <div style={{ display: "flex", gap: "20px" }}>
+          <div style={{ width: "144px" }}>
+            <Gopay />
+          </div>
+          <div style={{ width: "144px" }}>
+            <Ovo />
+          </div>
+          <div style={{ width: "144px" }}>
+            <Shopeepay />
+          </div>
         </div>
       </Slider>
       {/* <div style={{ display: "grid", gap: "20px", justifyContent: "center" }}>

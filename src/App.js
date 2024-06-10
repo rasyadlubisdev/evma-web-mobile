@@ -5,6 +5,7 @@ import Rewards from "./pages/Rewards";
 import Connect from "./pages/Connect";
 import BinsMap from "./pages/BinsMap";
 import Settings from "./pages/Settings";
+import Scanner from "./pages/Scanner";
 import Navbar from "./components/Navbar";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -50,6 +51,7 @@ function App() {
             <Route path="/connect" element={<Connect />} />
             <Route path="/binsmap" element={<BinsMap />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/scanner" element={<Scanner />} />
           </Routes>
           <Navbar data={5} />
         </Router>

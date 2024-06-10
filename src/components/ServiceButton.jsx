@@ -13,7 +13,7 @@
  **********************************************************************/
 
 import React from "react";
-import VectorImage from "./../assets/images/ServiceButton_Vector.png";
+import VectorImage from "./../assets/images/qrcode.svg";
 import { styled } from "@mui/material/styles";
 
 const ServiceButton1 = styled("div")({
@@ -41,17 +41,20 @@ const PlusCircle = styled("div")({
   alignItems: `flex-start`,
   padding: `0px`,
   boxSizing: `border-box`,
-  width: `80px`,
-  height: `80px`,
-  overflow: `hidden`
+  width: `64px`,
+  height: `64px`,
+  overflow: `hidden`,
+  borderRadius: `100%`,
+  backgroundColor: `#019875`
 });
 
 const Vector = styled("img")({
-  height: `64px`,
-  width: `64px`,
+  height: `38px`,
+  width: `38px`,
   position: `absolute`,
-  left: `8px`,
-  top: `8px`
+  left: `50%`,
+  top: `50%`,
+  transform: `translate(-50%, -50%)`
 });
 
 const SortYourTrashGiveItT = styled("div")(({ theme }) => ({
@@ -70,13 +73,13 @@ const SortYourTrashGiveItT = styled("div")(({ theme }) => ({
 
 function ServiceButton(props) {
   return (
-    <ServiceButton1 className={props.className} onClick={props.onClick}>
+    <ServiceButton1 className={props.className}>
       <PlusCircle>
         <Vector src={VectorImage} loading="lazy" alt={"Vector"} />
       </PlusCircle>
       <SortYourTrashGiveItT>
-        {`Sort your trash,
-Give it to us,
+        {`Scan the barcode, 
+Put the trash in,
 Then earn points!`}
       </SortYourTrashGiveItT>
     </ServiceButton1>
