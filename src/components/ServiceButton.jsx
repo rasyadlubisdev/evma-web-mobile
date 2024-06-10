@@ -73,7 +73,7 @@ const SortYourTrashGiveItT = styled("div")(({ theme }) => ({
 
 function ServiceButton(props) {
   return (
-    <ServiceButton1 className={props.className}>
+    <ServiceButton1 className={props.className} onClick={() => props.onClick()}>
       <PlusCircle>
         <Vector src={VectorImage} loading="lazy" alt={"Vector"} />
       </PlusCircle>
