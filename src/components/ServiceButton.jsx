@@ -24,12 +24,13 @@ const ServiceButton1 = styled("div")({
   position: `relative`,
   isolation: `isolate`,
   flexDirection: `row`,
-  width: "100%",
+  width: `100`,
   justifyContent: `space-between`,
   alignItems: `center`,
   padding: `24px 32px`,
   overflow: `hidden`,
-  height: "auto"
+  height: `auto`,
+  cursor: `pointer`
 });
 
 const PlusCircle = styled("div")({

@@ -66,6 +66,7 @@ const Home = () => {
 
 
     const videoRef = useRef()
+    const [getResult, setGetResult] = useState(null)
     const [visible, setVisible] = useState({display: "hidden", opacity: "0", width: "0", height: "0"})
     
     let scanner;
@@ -74,52 +75,25 @@ const Home = () => {
     };      
 
     useEffect(() => {
-      // To enforce the use of the new api with detailed scan results, call the constructor with an options object, see below.
       const videoEl = videoRef.current
 
-      // async function playVideo() {
-      //     const playPromise = await videoEl.play()
-      //     return playPromise
-      // }
-
-      // const qrScanner = new QrScanner(
-      //     videoEl,
-      //     result => console.log('decoded qr code:', result),
-      //     { /* your options or returnDetailedScanResult: true if you're not specifying any other options */ },
-      // );
-
-      // if (playVideo() !== undefined) {
-      //     playVideo().then(() => {
-      //         console.log("NYALA WOII")
-      //         qrScanner.start();
-      //     })
-      //     .catch(error => {
-      //         console.log("ERROR WOII STOPP")
-      //         qrScanner.stop();
-      //     });
-      //   }
-      // // console.log(playVideo())
-
-
-      scanner = new QrScanner(videoEl, result => console.log('decoded qr code:', result), {
+      scanner = new QrScanner(videoEl, result => setGetResult(JSON.parse(result.data)), {
           returnDetailedScanResult: true
       });
+      
+      // if (getResult != null) {
+      //   setData(JSON.parse(getResult.data))
+      // }
 
-      // setInterval(() => {
-      //     scanner.start();
-      // }, 3000)
-      // scanner.stop();
-      // scanner.start()
-
-      // scanner.start();
-
-
+      console.log(getResult)
   })
 
   async function snapshot() {
-      scanner.start()
-      await sleep(2000);
-      scanner.stop()
+      if (scanner != undefined) {
+        scanner.start()
+        await sleep(2000);
+        scanner.stop()
+      }
   }
 
   async function scan() {
