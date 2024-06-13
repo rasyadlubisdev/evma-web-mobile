@@ -113,7 +113,7 @@ const Home = () => {
           <Header />
         </div>
         <div style={{ padding: "24px 0" }}>
-          <StatusPoints />
+          <StatusPoints points={parseInt(112 + ((getResult != null) ? getResult?.points : 0))} />
         </div>
         {/* {activeService ? (
           <>

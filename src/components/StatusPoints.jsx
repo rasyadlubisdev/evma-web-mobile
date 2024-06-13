@@ -118,7 +118,7 @@ function StatusPoints(props) {
     <StatusPoints1 className={props.className}>
       <Frame31>
         <BiPoints>{`BiPoints`}</BiPoints>
-        <Q10000>{`10.000`}</Q10000>
+        <Q10000>{props.points}</Q10000>
       </Frame31>
       <Frame32>
         <Charisma>{`Charisma`}</Charisma>
