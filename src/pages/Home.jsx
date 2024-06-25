@@ -13,6 +13,8 @@ import Slider from "../components/Slider";
 import { Link } from "react-router-dom";
 import QrScanner from 'qr-scanner';
 import { useStepContext } from "@mui/material";
+import imageBottle from "../assets/images/bottle_circle.png";
+import imageTin from "../assets/images/tin_circle.png";
 
 const Home = () => {
   // const [activeService, setActiveService] = useState(false);
@@ -97,7 +99,7 @@ const Home = () => {
   }
 
   async function scan() {
-    setVisible({display: "block", opacity: "1", width: "100vw", height: "100vh"})
+    setVisible({display: "block", opacity: "1", width: "auto", height: "100vh", right: "-500px"})
     snapshot()
     await sleep(2000);
     setVisible({display: "hidden", opacity: "0", width: "0", height: "0"})
@@ -128,20 +130,22 @@ const Home = () => {
         </Link> */}
         <ServiceButton onClick={scan} />
         <Title title="Your Trash" />
-        <Slider>
-          <div style={{ flexShrink: 0, marginRight: "20px" }}>
-            <WetOrganic />
+        <div className="info-waste" style={{ display: "flex", justifyContent: "space-around" }}>
+          <div className="card-info-bottle" style={{ backgroundColor: "#00AEAD", height: "185px", width: "132px", borderRadius: "12px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div className="image-circle" style={{ marginTop: "16.24px" }}>
+              <img src={imageBottle} alt="" />
+            </div>
+            <h3 style={{ fontSize: "16px", fontWeight: "600", color: "white", margin: "8px 0 6px 0" }}>Bottles</h3>
+            <div className="total-bottle" style={{ fontSize: "14px", fontWeight: "400", color: "white" }}>28 pcs</div>
           </div>
-          <div style={{ flexShrink: 0, marginRight: "20px" }}>
-            <DryOrganic />
+          <div className="card-info-tin" style={{ backgroundColor: "#ED4635", height: "185px", width: "132px", borderRadius: "12px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div className="image-circle" style={{ marginTop: "20.6px" }}>
+              <img src={imageTin} alt="" />
+            </div>
+            <h3 style={{ fontSize: "16px", fontWeight: "600", color: "white", margin: "8px 0 6px 0" }}>Tin Bottles</h3>
+            <div className="total-bottle" style={{ fontSize: "14px", fontWeight: "400", color: "white" }}>13 pcs</div>
           </div>
-          <div style={{ flexShrink: 0, marginRight: "20px" }}>
-            <NonOrganic />
-          </div>
-          <div style={{ flexShrink: 0, marginRight: "20px" }}>
-            <Hazardous />
-          </div>
-        </Slider>
+        </div>
         <Title title="Events For You" />
         <Slider>
           <div

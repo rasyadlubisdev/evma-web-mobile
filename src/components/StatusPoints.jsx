@@ -117,7 +117,7 @@ function StatusPoints(props) {
   return (
     <StatusPoints1 className={props.className}>
       <Frame31>
-        <BiPoints>{`BiPoints`}</BiPoints>
+        <BiPoints>{`Points`}</BiPoints>
         <Q10000>{props.points}</Q10000>
       </Frame31>
       <Frame32>

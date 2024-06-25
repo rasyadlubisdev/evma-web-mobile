@@ -76,7 +76,7 @@ function Points(props) {
   return (
     <Points1 className={props.className}>
       <Frame1375>
-        <YourBiPoints>{`Your BiPoints`}</YourBiPoints>
+        <YourBiPoints>{`Your Points`}</YourBiPoints>
         <Q10000>{`10.000`}</Q10000>
       </Frame1375>
     </Points1>

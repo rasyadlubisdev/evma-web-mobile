@@ -114,7 +114,7 @@ function CardGift(props) {
   return (
     <CardGift1 className={props.className}>
       <Group96>
-        <GetFree1Totebag>{`Get free 1 Totebag`}</GetFree1Totebag>
+        <GetFree1Totebag>{`Get a 3d filament`}</GetFree1Totebag>
         <CanBeTakenFromOurOff>
           {`Can be taken from our offcial store`}
         </CanBeTakenFromOurOff>

@@ -7,18 +7,22 @@ import MarkerClusterGroup from "react-leaflet-cluster";
 import { markers } from "./../components/Markers";
 import useGeolocation from "../hooks/useGeolocation";
 import { animate } from "framer-motion";
+import gpsFixedIcon from "../components/icons/gps-fixed.svg";
+
 
 const BinsMap = () => {
 
-  // const [location, setLocation] = useState(useGeolocation())
-  const [control, setControl] = useState()
-  // const mapRef = useRef()
-  const [map, setMap] = useState(null)
-  const ZOOM_LEVEL = 14;
+  const mapRef = useRef()
+  // const [map, setMap] = useState(null)
+  const ZOOM_LEVEL = 16;
 
-  const customIcon = new Icon({
-    iconUrl: require("./../components/icons/marker-bins.png"),
+  const binsIcon = new Icon({
+    iconUrl: require("../components/icons/marker-bins.png"),
     iconSize: [35, 49]
+  });
+  const userIcon = new Icon({
+    iconUrl: require("../components/icons/marker-user.png"),
+    iconSize: [49, 49]
   });
 
   const location = useGeolocation();
@@ -36,9 +40,11 @@ const BinsMap = () => {
       // mapRef.current._lastCenter.lat = location.coordinates.latitude
       // mapRef.current._lastCenter.lng = location.coordinates.longitude
       // console.log([location.coordinates.latitude, location.coordinates.longitude])
-      map.setView([location.coordinates.latitude, location.coordinates.longitude], ZOOM_LEVEL, { animate: true })
+      mapRef.current.setView([location.coordinates.latitude, location.coordinates.longitude], ZOOM_LEVEL, { animate: true })
+    } else if (location.error) {
+      alert(location.message)
     } else {
-      alert(location.error.message)
+      alert("Please wait, location is loading...")
     }
   }
 
@@ -64,8 +70,8 @@ const BinsMap = () => {
 
   return (
     <MapContainer 
-      ref={setMap}
-      center={[-6.174032, 106.825981]}
+      ref={mapRef}
+      center={[-7.280301604812306, 112.79531939931405]}
       zoom={ZOOM_LEVEL}
       scrollWheelZoom={true}
     >
@@ -75,19 +81,30 @@ const BinsMap = () => {
       />
       <MarkerClusterGroup chunkedLoading>
         {markers.map((marker, idx) => (
-          <Marker position={marker.geocode} icon={customIcon} key={idx}>
+          <Marker position={marker.geocode} icon={binsIcon} key={idx}>
             <Popup>Filled {Math.ceil((marker.filled / 170) * 100)}%</Popup>
           </Marker>
         ))}
       </MarkerClusterGroup>
       {
         (location.loaded && !location.error) && (
-          <Marker position={[location.coordinates.latitude, location.coordinates.longitude]} icon={customIcon}></Marker>
+          <Marker position={[location.coordinates.latitude, location.coordinates.longitude]} icon={userIcon}></Marker>
         )
       }
 
-      <button onClick={showMyLocation} style={{ position: 'absolute', bottom: 100, right: 50, zIndex: 1000 }}>
-        Click Me
+      <button onClick={showMyLocation} style={{ 
+          position: 'absolute', 
+          bottom: 100, 
+          right: 30, 
+          zIndex: 1000, 
+          border: "none",
+          borderRadius: "10px",
+          display: "flex",
+          padding: "6px",
+          backgroundColor: "#019875",
+          boxShadow: "0px 0px 32px 0px rgba(4,97,75,0.8)"
+        }}>
+        <img src={gpsFixedIcon} alt="" />
       </button>
     </MapContainer>
   );

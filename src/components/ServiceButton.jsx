@@ -79,8 +79,8 @@ function ServiceButton(props) {
         <Vector src={VectorImage} loading="lazy" alt={"Vector"} />
       </PlusCircle>
       <SortYourTrashGiveItT>
-        {`Scan the barcode, 
-Put the trash in,
+        {`Put the trash in, 
+Scan the barcode,
 Then earn points!`}
       </SortYourTrashGiveItT>
     </ServiceButton1>
