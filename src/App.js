@@ -1,4 +1,4 @@
-// import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./styles.css";
 import Home from "./pages/Home";
 import Rewards from "./pages/Rewards";
@@ -6,9 +6,13 @@ import Connect from "./pages/Connect";
 import BinsMap from "./pages/BinsMap";
 import Settings from "./pages/Settings";
 import Scanner from "./pages/Scanner";
+import Signup from "./pages/Signup";
 import Navbar from "./components/Navbar";
 
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+
+import { auth, db } from "./auth/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 function App() {
   // useEffect(() => {
@@ -18,6 +22,22 @@ function App() {
 
   //   return () => clearTimeout(timeout);
   // }, []);
+
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+      setLoading(false);
+      console.log("INI USER", user)
+    });
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div
@@ -46,12 +66,13 @@ function App() {
         </div> */}
         <Router>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/rewards" element={<Rewards />} />
-            <Route path="/connect" element={<Connect />} />
-            <Route path="/binsmap" element={<BinsMap />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route path="/" element={ user ? <Home /> : <Navigate to="/signup" /> } />
+            <Route path="/rewards" element={ user ? <Rewards /> : <Navigate to="/signup" /> } />
+            <Route path="/connect" element={ user ? <Connect /> : <Navigate to="/signup" /> } />
+            <Route path="/binsmap" element={ user ? <BinsMap /> : <Navigate to="/signup" /> } />
+            <Route path="/settings" element={ user ? <Settings /> : <Navigate to="/signup" /> } />
             <Route path="/scanner" element={<Scanner />} />
+            <Route path="/signup" element={<Signup />} />
           </Routes>
           <Navbar data={5} />
         </Router>

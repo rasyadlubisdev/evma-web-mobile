@@ -126,7 +126,7 @@ function Header(props) {
     <Header1 className={props.className}>
       <Group87>
         <Group28>
-          <HiRasyad>{`Hi, Rasyad`}</HiRasyad>
+          <HiRasyad>{`Hi, ${props.name ? (props.name.firstName.split(" ").length > 2 ? props.name.firstName.split(" ")[1] : props.name.firstName) : "User"}`}</HiRasyad>
           <StartSortingYourWast>
             {`Start sorting your waste`}
           </StartSortingYourWast>

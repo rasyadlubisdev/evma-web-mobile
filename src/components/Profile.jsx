@@ -12,7 +12,7 @@ const Profile = ({ image, bigger }) => {
       }}
     >
       <img
-        src={image}
+        src={image ? image : defaultImage}
         alt=""
         style={{
           width: "100%",
