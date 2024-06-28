@@ -66,7 +66,7 @@ const Settings = () => {
             <Profile image={userDetails.photo} bigger={true} />
             <div className="text-content" style={{ marginLeft: 16 }}>
               <div className="text-name hs semi-bold" style={{ color: "#22413A" }}>
-                {userDetails.firstName}
+                {userDetails.firstName.split(" ").length > 2 ? (userDetails.firstName.split(" ")[1] + " " + userDetails.firstName.split(" ")[userDetails.firstName.split(" ").length - 1]) : userDetails.firstName}
               </div>
               <div className="text-gmail md regular" style={{ color: "#708A84" }}>
                 {userDetails.email}

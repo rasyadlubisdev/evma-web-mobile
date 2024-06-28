@@ -30,7 +30,7 @@ function App() {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
       setLoading(false);
-      console.log("INI USER", user)
+      // console.log("INI USER", user)
     });
     return () => unsubscribe();
   }, []);
@@ -66,8 +66,8 @@ function App() {
         </div> */}
         <Router>
           <Routes>
-            <Route path="/" element={ user ? <Home /> : <Navigate to="/signup" /> } />
-            <Route path="/rewards" element={ user ? <Rewards /> : <Navigate to="/signup" /> } />
+            <Route path="/" element={ user ? <Home userGlobal={user} /> : <Navigate to="/signup" /> } />
+            <Route path="/rewards" element={ user ? <Rewards userGlobal={user} /> : <Navigate to="/signup" /> } />
             <Route path="/connect" element={ user ? <Connect /> : <Navigate to="/signup" /> } />
             <Route path="/binsmap" element={ user ? <BinsMap /> : <Navigate to="/signup" /> } />
             <Route path="/settings" element={ user ? <Settings /> : <Navigate to="/signup" /> } />

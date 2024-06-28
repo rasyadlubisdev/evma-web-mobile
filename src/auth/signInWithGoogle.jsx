@@ -15,6 +15,9 @@ function SignInwithGoogle({ isSignin, setIsSignin }) {
           firstName: user.displayName,
           photo: user.photoURL,
           lastName: "",
+          points: 0,
+          bottles_count: 0,
+          tins_count: 0
         });
         console.log("Ini harusnya login woyy")
         toast.success("User logged in Successfully", {

@@ -73,6 +73,7 @@ const Q10000 = styled("div")({
 });
 
 function Points(props) {
+  console.log(props.userGlobal)
   return (
     <Points1 className={props.className}>
       <Frame1375>

@@ -8,11 +8,11 @@ import CardGift from "../components/CardGift";
 import CardVoucher from "../components/CardVoucher";
 import Slider from "../components/Slider";
 
-const Rewards = () => {
+const Rewards = ({ userGlobal }) => {
   return (
     <div className="rewards-page" style={{ padding: "0 24px" }}>
       <div style={{ padding: "32px 0 0 0" }}>
-        <Points />
+        <Points userGlobal={userGlobal} />
       </div>
       <Title title="Exchange" />
       <Slider>

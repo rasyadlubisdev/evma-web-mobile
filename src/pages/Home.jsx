@@ -16,20 +16,20 @@ import { useStepContext } from "@mui/material";
 import imageBottle from "../assets/images/bottle_circle.png";
 import imageTin from "../assets/images/tin_circle.png";
 import { auth, db } from "../auth/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, updateDoc } from "firebase/firestore";
 
-const Home = () => {
+const Home = ({ userGlobal }) => {
 
     const [userDetails, setUserDetails] = useState(null);
     const fetchUserData = async () => {
       auth.onAuthStateChanged(async (user) => {
-        console.log(user);
+        // console.log(user);
 
         const docRef = doc(db, "Users", user.uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setUserDetails(docSnap.data());
-          console.log(docSnap.data());
+          // console.log(docSnap.data());
         } else {
           console.log("User is not logged in");
         }
@@ -38,7 +38,7 @@ const Home = () => {
 
     useEffect(() => {
       fetchUserData();
-    }, []);
+    }, [userDetails]); // kalau ininya [] dihapus atau diisi [userDetails] bakal ngeprint terus console.lognya, tapi jadinya realtime
 
     const videoRef = useRef()
     const [getResult, setGetResult] = useState(null)
@@ -60,13 +60,30 @@ const Home = () => {
       //   setData(JSON.parse(getResult.data))
       // }
 
-      console.log(getResult)
+      // console.log(getResult)
   })
+
+  const addPoint = async (user) => {
+    try {
+        const docRef = await updateDoc(doc(db, "Users", userGlobal.uid), {
+          points: parseInt(userDetails.points + 56)
+        });
+        console.log("ADD POINT", user)
+        console.log("GET RESULTS?", getResult?.points)
+        console.log("USER GLOBAL", userGlobal.uid)
+        // console.log("Document written with ID: ", docRef.id);
+        console.log("DOC REF", docRef)
+      }
+      catch (user) {
+        console.error("Error adding document: ", user);
+      }
+  }
 
   async function snapshot() {
       if (scanner != undefined) {
         scanner.start()
         await sleep(2000);
+        addPoint()
         scanner.stop()
       }
   }
@@ -90,7 +107,8 @@ const Home = () => {
               <Header name={userDetails} />
             </div>
             <div style={{ padding: "24px 0" }}>
-              <StatusPoints points={parseInt(112 + ((getResult != null) ? getResult?.points : 0))} />
+              {/* <StatusPoints points={parseInt(112 + ((getResult != null) ? getResult?.points : 0))} /> */}
+              <StatusPoints points={userDetails.points} />
             </div>
             {/* {activeService ? (
               <>
@@ -111,14 +129,14 @@ const Home = () => {
                   <img src={imageBottle} alt="" />
                 </div>
                 <h3 style={{ fontSize: "16px", fontWeight: "600", color: "white", margin: "8px 0 6px 0" }}>Bottles</h3>
-                <div className="total-bottle" style={{ fontSize: "14px", fontWeight: "400", color: "white" }}>28 pcs</div>
+                <div className="total-bottle" style={{ fontSize: "14px", fontWeight: "400", color: "white" }}>{userDetails.bottles_count} pcs</div>
               </div>
               <div className="card-info-tin" style={{ backgroundColor: "#ED4635", height: "185px", width: "132px", borderRadius: "12px", display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <div className="image-circle" style={{ marginTop: "20.6px" }}>
                   <img src={imageTin} alt="" />
                 </div>
                 <h3 style={{ fontSize: "16px", fontWeight: "600", color: "white", margin: "8px 0 6px 0" }}>Tin Bottles</h3>
-                <div className="total-bottle" style={{ fontSize: "14px", fontWeight: "400", color: "white" }}>13 pcs</div>
+                <div className="total-bottle" style={{ fontSize: "14px", fontWeight: "400", color: "white" }}>{userDetails.tins_count} pcs</div>
               </div>
             </div>
             <Title title="Events For You" />
