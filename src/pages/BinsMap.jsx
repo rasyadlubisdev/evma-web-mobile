@@ -94,7 +94,7 @@ const BinsMap = () => {
 
       <button onClick={showMyLocation} style={{ 
           position: 'absolute', 
-          bottom: 200, 
+          bottom: 150, 
           right: 30, 
           zIndex: 1000, 
           border: "none",
