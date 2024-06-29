@@ -29,7 +29,6 @@ function SignInwithGoogle({ isSignin, setIsSignin }) {
   }
   return (
     <div>
-      <h2 style={{ textAlign: "center" }}>Please Signup...</h2>
       <div
         style={{ display: "flex", justifyContent: "center", cursor: "pointer" }}
         onClick={googleLogin}

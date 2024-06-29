@@ -83,7 +83,8 @@ const MaskGroup = styled("img")({
   width: `50px`,
   position: `absolute`,
   left: `0px`,
-  top: `1px`
+  top: `1px`,
+  borderRadius: `9999px`
 });
 
 const Frame30 = styled("div")({
@@ -126,12 +127,12 @@ function Header(props) {
     <Header1 className={props.className}>
       <Group87>
         <Group28>
-          <HiRasyad>{`Hi, ${props.name ? (props.name.firstName.split(" ").length > 2 ? props.name.firstName.split(" ")[1] : props.name.firstName) : "User"}`}</HiRasyad>
+          <HiRasyad>{`Hi, ${props.user ? (props.user.firstName.split(" ").length > 2 ? props.user.firstName.split(" ")[1] : props.user.firstName) : "User"}`}</HiRasyad>
           <StartSortingYourWast>
             {`Start sorting your waste`}
           </StartSortingYourWast>
         </Group28>
-        <MaskGroup src={MaskGroupImage} loading="lazy" alt={"Mask group"} />
+        <MaskGroup src={props.user.photo} loading="lazy" alt={"Mask group"} />
       </Group87>
       <Frame30>
         <Bell>

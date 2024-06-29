@@ -23,7 +23,7 @@ const Home = ({ userGlobal }) => {
     const [userDetails, setUserDetails] = useState(null);
     const fetchUserData = async () => {
       auth.onAuthStateChanged(async (user) => {
-        // console.log(user);
+        console.log(user);
 
         const docRef = doc(db, "Users", user.uid);
         const docSnap = await getDoc(docRef);
@@ -38,7 +38,25 @@ const Home = ({ userGlobal }) => {
 
     useEffect(() => {
       fetchUserData();
-    }, [userDetails]); // kalau ininya [] dihapus atau diisi [userDetails] bakal ngeprint terus console.lognya, tapi jadinya realtime
+    }, []); // kalau ininya [] dihapus atau diisi [userDetails] bakal ngeprint terus console.lognya, tapi jadinya realtime
+
+    const addPoint = async (user) => {
+      try {
+          const docRef = await updateDoc(doc(db, "Users", userGlobal.uid), {
+            points: parseInt(userDetails.points + ((getResult != null) ? getResult?.points : 0)),
+            bottles_count: parseInt(userDetails.bottles_count + ((getResult != null) ? getResult?.bottles_count : 0)),
+            tins_count: parseInt(userDetails.tins_count + ((getResult != null) ? getResult?.tins_count : 0)),
+          });
+          console.log("ADD POINT", user)
+          console.log("GET RESULTS?", getResult?.points)
+          console.log("USER GLOBAL", userGlobal.uid)
+          // console.log("Document written with ID: ", docRef.id);
+          console.log("DOC REF", docRef)
+        }
+        catch (user) {
+          console.error("Error adding document: ", user);
+        }
+    }
 
     const videoRef = useRef()
     const [getResult, setGetResult] = useState(null)
@@ -55,6 +73,7 @@ const Home = ({ userGlobal }) => {
       scanner = new QrScanner(videoEl, result => setGetResult(JSON.parse(result.data)), {
           returnDetailedScanResult: true
       });
+      addPoint()
       
       // if (getResult != null) {
       //   setData(JSON.parse(getResult.data))
@@ -63,27 +82,10 @@ const Home = ({ userGlobal }) => {
       // console.log(getResult)
   })
 
-  const addPoint = async (user) => {
-    try {
-        const docRef = await updateDoc(doc(db, "Users", userGlobal.uid), {
-          points: parseInt(userDetails.points + 56)
-        });
-        console.log("ADD POINT", user)
-        console.log("GET RESULTS?", getResult?.points)
-        console.log("USER GLOBAL", userGlobal.uid)
-        // console.log("Document written with ID: ", docRef.id);
-        console.log("DOC REF", docRef)
-      }
-      catch (user) {
-        console.error("Error adding document: ", user);
-      }
-  }
-
   async function snapshot() {
       if (scanner != undefined) {
         scanner.start()
         await sleep(2000);
-        addPoint()
         scanner.stop()
       }
   }
@@ -93,6 +95,7 @@ const Home = ({ userGlobal }) => {
     snapshot()
     await sleep(2000);
     setVisible({display: "hidden", opacity: "0", width: "0", height: "0"})
+    window.location.reload(false)
   }
 
 
@@ -104,7 +107,7 @@ const Home = ({ userGlobal }) => {
         userDetails ? (
           <div className="home-page" style={{ padding: "0 24px" }}>
             <div style={{ padding: "24px 0 0 0" }}>
-              <Header name={userDetails} />
+              <Header user={userDetails} />
             </div>
             <div style={{ padding: "24px 0" }}>
               {/* <StatusPoints points={parseInt(112 + ((getResult != null) ? getResult?.points : 0))} /> */}
