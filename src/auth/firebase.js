@@ -3,24 +3,47 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
+// Your web app's Firebase configuration using environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyBgRi1f5_8Bbe-N-m-8BARb9267ffB1bvU",
-  authDomain: "evma-web-app.firebaseapp.com",
-  projectId: "evma-web-app",
-  storageBucket: "evma-web-app.firebasestorage.app",
-  messagingSenderId: "1073351956182",
-  appId: "1:1073351956182:web:9d75c2a1c15bc40f845b77",
-  measurementId: "G-0CP7GJRYR7",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
+
+// Validate that all required environment variables are present
+const requiredEnvVars = [
+  'REACT_APP_FIREBASE_API_KEY',
+  'REACT_APP_FIREBASE_AUTH_DOMAIN',
+  'REACT_APP_FIREBASE_PROJECT_ID',
+  'REACT_APP_FIREBASE_STORAGE_BUCKET',
+  'REACT_APP_FIREBASE_MESSAGING_SENDER_ID',
+  'REACT_APP_FIREBASE_APP_ID'
+];
+
+const missingEnvVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
+
+if (missingEnvVars.length > 0) {
+  throw new Error(
+    `Missing required environment variables: ${missingEnvVars.join(', ')}`
+  );
+}
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
-export const auth = getAuth();
+// Initialize Analytics only in production and if measurementId is available
+let analytics = null;
+if (process.env.NODE_ENV === 'production' && process.env.REACT_APP_FIREBASE_MEASUREMENT_ID) {
+  analytics = getAnalytics(app);
+}
+
+// Initialize Firebase Authentication and Firestore
+export const auth = getAuth(app);
 export const db = getFirestore(app);
+export { analytics };
 export default app;

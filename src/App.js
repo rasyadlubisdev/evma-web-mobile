@@ -15,13 +15,6 @@ import { auth, db } from "./auth/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
 function App() {
-  // useEffect(() => {
-  //   const timeout = setTimeout(() => {
-  //     window.location.replace("https://biven.netlify.app/");
-  //   }, 3000);
-
-  //   return () => clearTimeout(timeout);
-  // }, []);
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
